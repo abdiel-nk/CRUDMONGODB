@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title> <%= title %> </title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+     </head>
+    <body>
+    <div class="container">
+        <H1><%= title %></H1>
+        <form action="/add" method="post">
+            <legend>
+                Agregar tarea
+            </legend>
+            <div class="form-group">
+                <input type="text" id="title" class="form-control" name="title" >
+              </div>
+              <div class="form-group">
+                  <textarea placeholder="Agregar descripcion" class="form-control" name="description" rows="1 "  cols="50"></textarea>
+              </div>
+              <button class="btn btn-primary">
+                  Agregar
+              </button>
+        </form>
+    </hr> 
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Operations</th>
+            </tr>
+        </thead>
+        <a>El = es para interpretar varialbes</a>
+        <tbody>
+          <% for (var i=0;i < tasks.length;i++){ %>
+                <tr>  
+                    <td><%= i +1 %></td> 
+                    <td>
+                        <strong><%=tasks[i].title %></strong> </strong>
+                    </td> 
+                    <td> 
+                        <%= tasks[i].description %></td>
+                    </td>                   
+                    <td> 
+                        <a 
+                        class="<%= tasks[i].status ? 'btn btn-success ': 'btn btn-dark'%>"
+                        href="/turn/<%=tasks[i]._id %>">Hechos</a>
+                        <a 
+                        id="delete"
+                        class="btn btn-danger" href="/delete/<%= tasks[i]._id %>" >
+                            Eliminar</a>
+                    </td>
+                </tr>
+            <%} %>
+        </tbody>
+    </table>
+    </div>
+    <script>
+    document.getElementById('title').focus();
+    document.getElementById('delete').addEventListener('click', function(e){
+        let response =  confirm('are you sure to delete ?');
+        if(!response){
+            e.preventDefault();
+        }
+    });
+    </script>
+</body>
+</html>
+
+
+
